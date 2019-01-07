@@ -1,0 +1,9 @@
+﻿Group: Payment methods
+FriendlyName: BitCoin
+SystemName: Payments.BitCoin
+Version: 1.21
+SupportedVersions: 3.90
+Author: Omid Rajabalian from iran , rajabalian.omid@live.com
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.BitCoin.dll
+Description: This plugin enables bitcoin payments

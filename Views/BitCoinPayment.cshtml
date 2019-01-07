@@ -1,0 +1,324 @@
+﻿@model Nop.Plugin.Payments.BitCoin.Models.PaymentInfoModel
+@using Nop.Web.Framework.UI
+
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-checkout-page");
+    Html.AppendPageCssClassParts("html-order-confirm-page");
+}
+<script type="text/javascript" charset="utf-8">
+    (function (a) {
+        a.tooltipsy = function (c, b) {
+            this.options = b;
+            this.$el = a(c);
+            this.title = this.$el.attr("title") || "";
+            this.$el.attr("title", "");
+            this.random = parseInt(Math.random() * 10000);
+            this.ready = false;
+            this.shown = false;
+            this.width = 0;
+            this.height = 0;
+            this.delaytimer = null;
+            this.$el.data("tooltipsy", this);
+            this.init()
+        };
+        a.tooltipsy.prototype = {
+            init: function () {
+                var e = this, d, b = e.$el, c = b[0];
+                e.settings = d = a.extend({}, e.defaults, e.options);
+                d.delay = +d.delay;
+                if (typeof d.content === "function") {
+                    e.readify()
+                }
+            },
+        }; a.fn.tooltipsy = function (b) { return this.each(function () { new a.tooltipsy(this, b) }) }
+    })(jQuery);
+    $(document).ready(function () {
+        $(".btn-wait, .btn-wallet").on("click", function () { location.href = "bitcoin:@(Model.Address)?amount=@(((decimal)(double)Model.Amount).ToString().Replace("/", "."))&label=Payment"; });
+    })
+</script>
+
+<style type="text/css">
+    .addr {
+        font-size: 12px;
+        line-height: 16px;
+        margin-right: 12px;
+        background-color: #F7F7F9;
+        border: 1px solid #E1E1E8;
+        white-space: nowrap;
+        padding: 2px 10px 3px 10px;
+        border-radius: 3px;
+        display: inline;
+    }
+
+        .addr a {
+            color: #333 !important
+        }
+
+    .btn-wallet {
+        background-color: #F7F9FB;
+        background-image: linear-gradient(#FFF, #F7F9FB);
+        border: 1px solid #D4DCE4;
+        border-radius: 3px;
+        color: #263D52;
+        display: inline-block;
+        font-size: 13px;
+        height: 26px;
+        line-height: 16px;
+        width: 100px;
+        margin: 0 10px 0 0;
+        padding: 4px 10px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .btn-wait, .btn-res {
+        background-color: #0099ff;
+        border: 1px solid #61bffd;
+        border-radius: 3px;
+        color: #FFF;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 15px;
+        height: 35px;
+        line-height: 16px;
+        margin: 0;
+        opacity: 0.65;
+        padding: 4px 10px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 220px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-wallet:hover, .btn-copy:hover {
+        background: #fafafa;
+        border-color: #bbb;
+        color: #222;
+    }
+
+    .column {
+        float: right;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .area {
+        border: 1px #cdcdcd;
+        border-style: solid;
+        padding: 30px;
+    }
+
+    .amount {
+        margin-bottom: 20px;
+        width: 71%;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    .bold {
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    .btn-spinner {
+        position: relative;
+        top: 2px;
+        right: 5px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: solid 2px transparent;
+        border-top-color: #fff;
+        border-left-color: #fff;
+        border-right-color: #fff;
+        border-radius: 10px;
+        -webkit-animation: spinner 800ms linear infinite;
+        -moz-animation: spinner 800ms linear infinite;
+        -ms-animation: spinner 800ms linear infinite;
+        -o-animation: spinner 800ms linear infinite;
+        animation: spinner 800ms linear infinite;
+        float: right;
+    }
+
+    @@-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @@-moz-keyframes spinner {
+        0% {
+            -moz-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        100% {
+            -moz-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @@-o-keyframes spinner {
+        0% {
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        100% {
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @@-ms-keyframes spinner {
+        0% {
+            -ms-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @@keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        100% {
+            transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+</style>
+
+<div class="page checkout-page order-confirm-page">
+    <div class="page-title">
+        <h1>@T("Plugin.Payments.Bitcoin.CheckoutBitcoinPayment")</h1>
+    </div>
+    <div class="page-body checkout-data">
+        <div class="section confirm-order">
+            <div align="center">
+                <div id="waiting" class="row area" style="width:50%">
+                    <div>
+                        <img class="logo" border="0" alt="Bitcoin Payment System" src="~/Plugins/Payments.BitCoin/Images/payment.png"></a>
+                    </div>
+                    <div id="alert" style="display:none;color:red">
+                        @T("Plugin.Payments.BitCoin.Less")
+                    </div>
+                    <div class="right bold">
+                        @T("Plugin.Payments.BitCoin.Total"): @(((decimal)(double)Model.Amount).ToString().Replace("/", ".")) BTC
+                    </div>
+                    <div class="row">
+                        <div class="column right">
+                            <a class="tooltip-right" href="https://chart.googleapis.com/chart?chs=83x83&chld=M|0&cht=qr&chl=bitcoin:@(Model.Address)?amount=@(((decimal)(double)Model.Amount).ToString().Replace("/", "."))&choe=UTF-8"><img border="0" width="83" height="83" src="https://chart.googleapis.com/chart?chs=83x83&chld=M|0&cht=qr&chl=bitcoin:@(Model.Address)?amount=@(((decimal)(double)Model.Amount).ToString().Replace("/", "."))&choe=UTF-8"></a>
+                        </div>
+                        <div class="column amount bold">
+                            BTC @T("Plugin.Payments.BitCoin.InOnePayment")
+                        </div>
+                        <div class="column right">
+                            <div class="addr">
+                                <a href="bitcoin:@Model.Address?amount=@(((decimal)(double)Model.Amount).ToString().Replace("/", "."))&label=Payment">@Model.Address</a>
+                            </div>
+                        </div>
+                        <div class="column right">
+                            <button class="btn-wallet">@T("Plugin.Payments.BitCoin.OpenWallet")</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn-wait" style="width:100%"><span class="btn-spinner"></span> @T("Plugin.Payments.BitCoin.InOnePayment.Awaiting.Payment.From.You")</button>
+                    </div>
+                </div>
+                <div id="success" class="row area" style="width:50%;display:none">
+                    <div>
+                        <img src="~/Plugins/Payments.BitCoin/Images/succpayment.png" />
+                    </div>
+                </div>
+                <div id="failed" class="row area" style="width:50%;display:none">
+                    <div>
+                        <img src="~/Plugins/Payments.BitCoin/Images/failedpayment.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+    $(function () {
+        var start = new Date().getTime();
+        var st = new Date().getTime();
+        var received = false;
+        var error = false;
+        callout = function () {
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/PaymentBitCoin/CallBack",
+                    async: true,
+                    cache: false,
+                    data: { toaddress: '@Model.Address' },
+                    dataType: "json"
+                }).done(function (data) {
+                    if (data.status == "error") {
+                        alert('occour error please try again !');
+                        error = true;
+                    }
+                    else if (data.status == "payment_received") {
+                        received = true;
+                        tx = data.tx;
+                        addr = data.addr;
+                        //$("#dt").text(data.date);
+                        $("#waiting").hide();
+                        $("#success").fadeIn();
+                        setTimeout(pageRedirect(), 2000);
+                    }
+                    else if (data.status == "less")
+                    {
+                        $("#alert").fadeIn();
+                    }
+                }).always(function () {
+                    if (!received && !error) {
+                        var end = new Date().getTime();
+                        if ((end - start) > 15 * 60 * 1000) {
+                            $("#waiting").hide();
+                            $("#failed").fadeIn();
+                        } else {
+                            setTimeout(callout, 7000);
+                        }
+                    }
+                });
+        };
+        function pageRedirect() {
+           window.location.replace("@(Url.RouteUrl("CheckoutCompleted", new { orderId = Model.Id }))");
+        }
+
+        $(".refresh").on("click", function () { $(this).fadeOut(); var end = new Date().getTime(); if ((end - st) > 2 * 60 * 60 * 1000) window.location.reload(true); start = new Date().getTime(); callout(); }); callout();
+    })
+</script>
+
